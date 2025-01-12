@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdbool.h>
+#define MAX 100
+
+void bfs(int adj[MAX][MAX], int V, int s) {
+    int queue[MAX], front = 0, rear = 0, curr, i;
+    bool visited[MAX] = {false};
+    visited[s] = true;
+    queue[rear++] = s;
+
+    while (front < rear) {
+        curr = queue[front++];
+        printf("%d ", curr);
+        for (i = 0; i < V; i++)
+            if (adj[curr][i] && !visited[i]) {
+                visited[i] = true;
+                queue[rear++] = i;
+            }
+    }
+    printf("\n");
+}
+
+int main() {
+    int V, E, adj[MAX][MAX] = {0}, u, v, start;
+    printf("Enter vertices, edges: ");
+    scanf("%d %d", &V, &E);
+    printf("Enter edges:\n");
+    while (E--) { scanf("%d %d", &u, &v); adj[u][v] = adj[v][u] = 1; }
+    printf("Enter start vertex: ");
+    scanf("%d", &start);
+    bfs(adj, V, start);
+    return 0;
+}
